@@ -1,0 +1,78 @@
+# ──────────────────────────────
+# Dependencias de Node y Angular
+# ──────────────────────────────
+/backend/node_modules/
+/frontend/dashboard/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# ──────────────────────────────
+# Compilados / Builds
+# ──────────────────────────────
+/backend/dist/
+/frontend/dashboard/dist/
+dist/
+build/
+tmp/
+temp/
+.cache/
+out-tsc/
+coverage/
+*.tsbuildinfo
+
+# ──────────────────────────────
+# Archivos de ambiente / credenciales
+# ──────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ──────────────────────────────
+# Angular / Vite / CLI outputs
+# ──────────────────────────────
+.angular/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ──────────────────────────────
+# Docker
+# ──────────────────────────────
+/docker-data/
+/mysql_data/
+/volumes/
+
+# ──────────────────────────────
+# Logs
+# ──────────────────────────────
+*.log
+logs/
+npm-debug.log*
+debug.log*
+
+# ──────────────────────────────
+# Sistemas operativos
+# ──────────────────────────────
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# ──────────────────────────────
+# Tests / reports
+# ──────────────────────────────
+coverage/
+.jest/
+.cypress/
+
+# ──────────────────────────────
+# Archivos varios de IDE
+# ──────────────────────────────
+*.sublime-project
+*.sublime-workspace
