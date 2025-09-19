@@ -1,9 +1,11 @@
 "use strict";
 const bcrypt = require("bcryptjs");
+const { query, QueryTypes } = require("sequelize");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface) {
+    const now = new Date();
     const passwordHash = bcrypt.hashSync("jahinsurance*", 10);
 
     // Usuario admin
@@ -12,90 +14,125 @@ module.exports = {
         email: "admin@local.test",
         password_hash: passwordHash,
         role: "admin",
-        created_at: new Date(),
+        createdAt: now,
+        updatedAt: now,
       },
     ]);
 
     await queryInterface.bulkInsert("Customers", [
-      { name: "Marcela", email: "marcela@test.com", created_at: new Date() },
-      { name: "Jose", email: "jose@test.com", created_at: new Date() },
+      {
+        name: "Marcela",
+        email: "marcela@test.com",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        name: "Jose",
+        email: "jose@test.com",
+        createdAt: now,
+        updatedAt: now,
+      },
     ]);
 
-    await queryInterface.bulkInsert("Products", [
-      { name: "Plan Oro", sku: "P-ORO", price: 120.0, category: "Seguros" },
-      { name: "Plan Plata", sku: "P-PLAT", price: 80.0, category: "Seguros" },
-      { name: "Plan Bronce", sku: "P-BRON", price: 50.0, category: "Seguros" },
-    ]);
+    const products = [
+      {
+        name: "Plan Oro",
+        sku: "P-ORO",
+        price: 120.0,
+        category: "Seguros",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        name: "Plan Plata",
+        sku: "P-PLAT",
+        price: 80.0,
+        category: "Seguros",
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        name: "Plan Bronce",
+        sku: "P-BRON",
+        price: 50.0,
+        category: "Seguros",
+        createdAt: now,
+        updatedAt: now,
+      },
+    ];
 
-    // --- ÓRDENES ---
-    const customers = await queryInterface.sequelize.query(
-      "SELECT id FROM Customers",
-      { type: queryInterface.sequelize.QueryTypes.SELECT }
-    );
-    const products = await queryInterface.sequelize.query(
-      "SELECT id, price FROM Products",
-      { type: queryInterface.sequelize.QueryTypes.SELECT }
-    );
+    await queryInterface.bulkInsert("Products", products);
 
-    // Ordenes de ejemplo
-    const [marcela] = customers;
-    const orderIds = [];
+    const orders = [
+      {
+        customer_id: 1, // Marcela
+        order_date: new Date(
+          now - (Math.random() * 10).toFixed(0) * 24 * 60 * 60 * 1000
+        ),
+        status: "paid",
+        payment_method: "Tarjeta",
+        total_amount: 210.0,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        customer_id: 1, // Marcela
+        order_date: new Date(
+          now - (Math.random() * 10).toFixed(0) * 24 * 60 * 60 * 1000
+        ),
+        status: "paid",
+        payment_method: "Tarjeta",
+        total_amount: 460.0,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        customer_id: 2, // Jose
+        order_date: new Date(
+          now - (Math.random() * 10).toFixed(0) * 24 * 60 * 60 * 1000
+        ),
+        status: "paid",
+        payment_method: "Tarjeta",
+        total_amount: 25.0,
+        createdAt: now,
+        updatedAt: now,
+      },
+    ];
 
-    // Orden 1
-    const [order1] = await queryInterface.bulkInsert(
-      "Orders",
-      [
-        {
-          customer_id: marcela.id,
-          order_date: now,
-          status: "paid",
-          payment_method: "Tarjeta",
-          total_amount: 120.0,
-          created_at: now,
-        },
-      ],
-      { returning: ["id"] }
-    );
+    await queryInterface.bulkInsert("Orders", orders);
 
-    orderIds.push(order1.id);
-
-    // Orden 2
-    const [order2] = await queryInterface.bulkInsert(
-      "Orders",
-      [
-        {
-          customer_id: customers[1].id,
-          order_date: now,
-          status: "paid",
-          payment_method: "Efectivo",
-          total_amount: 130.0,
-          created_at: now,
-        },
-      ],
-      { returning: ["id"] }
-    );
-
-    orderIds.push(order2.id);
-
-    // --- ITEMS DE ÓRDENES ---
     const orderItems = [
       {
-        order_id: orderIds[0],
-        product_id: products[0].id,
+        order_id: 1, // Primer pedido de Marcela
+        product_id: 1, // Plan Oro
         quantity: 1,
-        unit_price: products[0].price,
+        unit_price: products[0].price * 1,
+        createdAt: now,
+        updatedAt: now,
       },
       {
-        order_id: orderIds[1],
-        product_id: products[1].id,
-        quantity: 1,
-        unit_price: products[1].price,
+        order_id: 1, // Primer pedido de Marcela
+        product_id: 2, // Plan Plata
+        quantity: 3,
+        unit_price: products[1].price * 3,
+        createdAt: now,
+        updatedAt: now,
       },
       {
-        order_id: orderIds[1],
-        product_id: products[2].id,
+        order_id: 2, // Segundo pedido de Marcela
+        product_id: 3, // Plan Bronce
+        quantity: 2,
+        unit_price: products[2].price * 2,
+        createdAt: now,
+        updatedAt: now,
+      },
+      {
+        order_id: 3, // Primer pedido de Jose
+        product_id: 3, // Plan Bronce
         quantity: 1,
-        unit_price: products[2].price,
+        unit_price: products[0].price * 1,
+        createdAt: now,
+        updatedAt: now,
       },
     ];
 
