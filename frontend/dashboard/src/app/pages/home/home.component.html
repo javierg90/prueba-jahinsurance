@@ -1,1 +1,42 @@
-<p>home works!</p>
+<mat-grid-list cols="3" gutterSize="16px" rowHeight="fit">
+  <mat-grid-tile>
+    <mat-card
+      ><div>Ventas</div>
+      <h2>{{ kpis?.sales ?? "—" }}</h2></mat-card
+    >
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card
+      ><div>Clientes</div>
+      <h2>{{ kpis?.customers ?? "—" }}</h2></mat-card
+    >
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-card
+      ><div>Productos</div>
+      <h2>{{ kpis?.products ?? "—" }}</h2></mat-card
+    >
+  </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list
+  cols="3"
+  gutterSize="16px"
+  rowHeight="fit"
+  style="margin-top: 16px"
+>
+  <mat-grid-tile colspan="2">
+    <mat-card>
+      <h3>Ventas por día</h3>
+      <mat-divider></mat-divider>
+      <div echarts [options]="lineOpts" style="height: 320px"></div>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1">
+    <mat-card>
+      <h3>Top productos</h3>
+      <mat-divider></mat-divider>
+      <div echarts [options]="barOpts" style="height: 320px"></div>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,1 +1,44 @@
-<p>login works!</p>
+<div class="login-wrap">
+  <mat-card style="max-width: 420px; width: 100%">
+    <mat-card-header>
+      <mat-card-title>Iniciar sesión</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            placeholder="admin@local.test"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            placeholder="••••••••"
+          />
+        </mat-form-field>
+
+        <div style="margin-top: 12px">
+          <button
+            mat-raised-button
+            color="primary"
+            class="w-full"
+            [disabled]="form.invalid || loading"
+          >
+            <mat-icon *ngIf="loading" style="margin-right: 6px"
+              >hourglass_top</mat-icon
+            >
+            {{ loading ? "Ingresando…" : "Entrar" }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

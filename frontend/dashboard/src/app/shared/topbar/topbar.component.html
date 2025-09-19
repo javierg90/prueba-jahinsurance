@@ -1,1 +1,7 @@
-<p>topbar works!</p>
+<mat-toolbar color="primary">
+  <span>Dashboard</span>
+  <span style="flex: 1 1 auto"></span>
+  <button *ngIf="auth.isAuthenticated()" mat-button (click)="logout()">
+    <mat-icon>logout</mat-icon> Salir
+  </button>
+</mat-toolbar>
