@@ -1,0 +1,46 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: jah_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: jahinsurance
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: jahinsurance*
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: jah_backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: admin
+      DB_PASSWORD: "jahinsurance*"
+      DB_NAME: jahinsurance
+      JWT_SECRET: 52786c84c3ae09292dfa7e48194a87be
+      JWT_EXPIRES_IN: 3600
+      JWT_REFRESH_SECRET: 0cf2b34dfdcfc1d45f89088df2df16ab
+      JWT_REFRESH_EXPIRES_IN: 604800
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+
+  frontend:
+    build: ./frontend/dashboard
+    container_name: jah_frontend
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:

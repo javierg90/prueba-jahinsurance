@@ -17,12 +17,13 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       password_hash: DataTypes.STRING,
       role: DataTypes.STRING,
-      createdAt: DataTypes.DATE,
-      updatedAt: DataTypes.DATE,
     },
     {
       sequelize,
       modelName: "User",
+      tableName: "Users",
+      timestamps: true,
+      underscored: true,
     }
   );
   return User;

@@ -1,14 +1,15 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ApiService } from '../../core/services/api.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDividerModule } from '@angular/material/divider';
+import { ApiService } from '../../core/services/api.service';
+import { TopbarComponent } from "../../shared/topbar/topbar.component";
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NgxEchartsModule, MatCardModule, MatGridListModule, MatDividerModule],
+  imports: [CommonModule, NgxEchartsModule, MatCardModule, MatGridListModule, MatDividerModule, TopbarComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

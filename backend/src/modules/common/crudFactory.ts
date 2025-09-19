@@ -10,9 +10,17 @@ export function crudController<T extends Model>(ModelCls: ModelStatic<T>,
         beforeCreate?(payload: any): Promise<any> | any;
         beforeUpdate?(payload: any): Promise<any> | any;
     }) {
+
     const list = async (req: Request, res: Response) => {
         const options = buildListOptions(req.query, opts?.listAllowedFilters);
         if (opts?.defaultInclude) (options as any).include = opts.defaultInclude;
+
+        // 👇 añade esto para que el count no “explote” con includes
+        if ((options as any).include) {
+            (options as any).distinct = true;
+            (options as any).col = 'id'; // clave primaria del modelo listado
+        }
+
         const { rows, count } = await ModelCls.findAndCountAll(options);
         return res.json({ data: rows, meta: { count } });
     };

@@ -11,7 +11,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((err: HttpErrorResponse) => {
-      if (err.status === 401 && localStorage.getItem('refresh_token')) {
+      if (err.status === 500 && localStorage.getItem('refresh_token')) {
         return auth.refresh().pipe(
           switchMap(() => {
             const newToken = auth.getToken();

@@ -11,12 +11,6 @@
     "moduleResolution": "Node",
     "target": "es2020",
     "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
-
-    // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
@@ -26,14 +20,6 @@
     "exactOptionalPropertyTypes": true,
     "allowJs": true,
     "checkJs": false,
-
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
     "strict": true,
@@ -47,6 +33,6 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["dist", "node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "migrations", "seeders", "db", "config"]
 }

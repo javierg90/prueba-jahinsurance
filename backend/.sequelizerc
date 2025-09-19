@@ -1,0 +1,9 @@
+// .sequelizerc en la raíz de BACKEND
+const path = require("path");
+
+module.exports = {
+  config: path.resolve("config", "config.js"), // config/config.js
+  "models-path": path.resolve("src/db", "models"), // db/models/*.js
+  "migrations-path": path.resolve("migrations"), // migrations/*.js
+  "seeders-path": path.resolve("seeders"), // seeders/*.js
+};

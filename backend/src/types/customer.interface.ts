@@ -2,5 +2,5 @@ export interface CustomerAttrs {
     id: number;
     name: string;
     email: string;
-    createdAt?: Date
+    created_at?: Date
 }

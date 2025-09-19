@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "admin",
+    "password": null,
+    "database": "jahinsurance",
+    "host": "mysql",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "admin",
+    "password": null,
+    "database": "jahinsurance",
+    "host": "mysql",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "admin",
+    "password": null,
+    "database": "jahinsurance",
+    "host": "mysql",
+    "dialect": "mysql"
+  }
+}
