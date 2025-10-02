@@ -1,4 +1,13 @@
 version: "3.9"
+
+networks:
+  appnet:
+    name: jah_appnet
+    driver: bridge
+
+volumes:
+  mysql_data:
+
 services:
   mysql:
     image: mysql:8.0
@@ -8,18 +17,30 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: jahinsurance
       MYSQL_USER: admin
-      MYSQL_PASSWORD: jahinsurance*
+      MYSQL_PASSWORD: "jahinsurance*"
+    # Solo accesible desde el host local (no expone 0.0.0.0)
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3407:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    healthcheck:
+      # Dentro del contenedor, MySQL escucha en 127.0.0.1:3306
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      appnet:
+        aliases:
+          - mysql
 
   backend:
     build: ./backend
     container_name: jah_backend
     restart: unless-stopped
     environment:
-      DB_HOST: mysql
+      PORT: "3000" # asegurar que la app escucha en 3000
+      DB_HOST: mysql # nombre de servicio en la red de Docker
       DB_PORT: 3306
       DB_USER: admin
       DB_PASSWORD: "jahinsurance*"
@@ -31,7 +52,12 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+    networks:
+      appnet:
+        aliases:
+          - backend
 
   frontend:
     build: ./frontend/dashboard
@@ -41,6 +67,7 @@ services:
       - "4200:80"
     depends_on:
       - backend
-
-volumes:
-  mysql_data:
+    networks:
+      appnet:
+        aliases:
+          - frontend
